@@ -16,39 +16,38 @@ public class Empresa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
-    @Column(name="tipoRegistro",length = 1,nullable = false)
+    @Column(length = 1,nullable = false)
     private int tipoRegistro;
 
-    @Column(name="tipoIdentificacion",length = 2,nullable = false)
+    @Column(length = 2,nullable = false)
     private String tipoIdentificacion;
 
-    @Column(name="razonSocial",length = 200,nullable = false)
+    @Column(length = 200,nullable = false)
     private String razonSocial;
 
-    @Column(name="nNit",length = 12,nullable = false)
+    @Column(length = 12,nullable = false)
     private int nNit;
 
-    @Column(name="nNit",length = 1,nullable = false)
+    @Column(length = 1,nullable = false)
     private int dv;
 
-    @Column(name="tipoEntidad",length = 1,nullable = false)
+    @Column(length = 1,nullable = false)
     private int tipoEntidad;
 
-    @Column(name="codMunicipio",length = 5,nullable = false)
+    @Column(length = 5,nullable = false)
     private String codMunicipio;
 
-    @Column(name="actEconomica",length = 4,nullable = false)
+    @Column(length = 4,nullable = false)
     private int actEconomica;
 
-    @Column(name="telefono",length = 22,nullable = false)
+    @Column(length = 22,nullable = false)
     private String telefono;
 
-    @Column(name="direccion",length = 200,nullable = false)
+    @Column(length = 200,nullable = false)
     private String direccion;
 
-    @Column(name="direccion",length = 101,nullable = false)
+    @Column(length = 101,nullable = false)
     private String email;
 
 
