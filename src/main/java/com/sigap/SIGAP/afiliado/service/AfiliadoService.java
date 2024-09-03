@@ -1,6 +1,7 @@
 package com.sigap.SIGAP.afiliado.service;
 
 import com.sigap.SIGAP.afiliado.entity.Afiliado;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 

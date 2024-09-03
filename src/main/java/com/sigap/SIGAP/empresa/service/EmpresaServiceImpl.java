@@ -18,7 +18,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public Empresa registrar(Empresa empresa) {
-
+        validarEmpresa(empresa);
         empresaRepository.findByNumeroNit(empresa.getNumeroNit()).ifPresent(existeEmpresa -> {
             throw new GlobalExcepcion("La empresa con NIT " + existeEmpresa.getNumeroNit() + " ya existe."
                     , HttpStatus.BAD_REQUEST);
@@ -31,6 +31,7 @@ public class EmpresaServiceImpl implements EmpresaService {
     @Override
     public Empresa actualizar(Empresa empresa) {
         Empresa empresaBd = empresaRepository.findById(empresa.getId()).orElseThrow();
+        validarEmpresa(empresa);
 
         empresaBd.setEmail(empresa.getEmail());
         empresaBd.setDireccion(empresa.getDireccion());
@@ -56,5 +57,41 @@ public class EmpresaServiceImpl implements EmpresaService {
     public List<Empresa> ObtenerTodos() {
         return empresaRepository.findAll();
     }
+
+
+    private void validarEmpresa(Empresa empresa) {
+        if (empresa.getTipoIdentificacion() == null || empresa.getTipoIdentificacion().isEmpty()) {
+            throw new GlobalExcepcion("El tipo de identificación no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (empresa.getRazonSocial() == null || empresa.getRazonSocial().isEmpty()) {
+            throw new GlobalExcepcion("La razón social no puede estar vacía.", HttpStatus.BAD_REQUEST);
+        }
+        if (empresa.getNumeroNit() == null) {
+            throw new GlobalExcepcion("El número NIT no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (empresa.getDigitoVerificacion() < 0 || empresa.getDigitoVerificacion() > 9) {
+            throw new GlobalExcepcion("El dígito de verificación debe ser un número entre 0 y 9.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (empresa.getTipoEntidad() < 0) {
+            throw new GlobalExcepcion("El tipo de entidad no puede ser negativo.", HttpStatus.BAD_REQUEST);
+        }
+        if (empresa.getCodigoMunicipio() == null || empresa.getCodigoMunicipio().isEmpty()) {
+            throw new GlobalExcepcion("El código del municipio no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (empresa.getActividadEconomica() < 0) {
+            throw new GlobalExcepcion("La actividad económica no puede ser negativa.", HttpStatus.BAD_REQUEST);
+        }
+        if (empresa.getTelefono() == null || empresa.getTelefono().isEmpty()) {
+            throw new GlobalExcepcion("El teléfono no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (empresa.getDireccion() == null || empresa.getDireccion().isEmpty()) {
+            throw new GlobalExcepcion("La dirección no puede estar vacía.", HttpStatus.BAD_REQUEST);
+        }
+        if (empresa.getEmail() == null || empresa.getEmail().isEmpty()) {
+            throw new GlobalExcepcion("El email no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }

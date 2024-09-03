@@ -19,6 +19,10 @@ public class AfiliadoServiceImpl implements AfiliadoService{
 
     @Override
     public Afiliado registrar(Afiliado afiliado) {
+
+        validarAfiliado(afiliado);
+
+
         afiliadoRepository.findByNumeroIdentificacion(afiliado.getNumeroIdentificacion()).ifPresent(existeNumIdentificacion -> {
             throw new GlobalExcepcion("El Numero de Identificacion " + existeNumIdentificacion.getNumeroIdentificacion() + " ya existe."
                     , HttpStatus.BAD_REQUEST);
@@ -32,6 +36,8 @@ public class AfiliadoServiceImpl implements AfiliadoService{
     @Override
     public Afiliado actualizar(Afiliado afiliado) {
         Afiliado afiliadoBd = afiliadoRepository.findById(afiliado.getId()).orElseThrow();
+
+        validarAfiliado(afiliado);
 
         afiliadoBd.setPrimerNombre(afiliado.getPrimerNombre());
         afiliadoBd.setSegundoNombre(afiliado.getSegundoNombre());
@@ -63,5 +69,52 @@ public class AfiliadoServiceImpl implements AfiliadoService{
     @Override
         public List<Afiliado> ObtenerTodos() { return afiliadoRepository.findAll();
         }
+
+    private void validarAfiliado(Afiliado afiliado) {
+        if (afiliado.getTipoDocumento() == null || afiliado.getTipoDocumento().isEmpty()) {
+            throw new GlobalExcepcion("El tipo de documento no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (afiliado.getNumeroIdentificacion() == null) {
+            throw new GlobalExcepcion("El número de identificación no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (afiliado.getPrimerApeliido() == null || afiliado.getPrimerApeliido().isEmpty()) {
+            throw new GlobalExcepcion("El primer apellido no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        // 'Segundo apellido' puede estar vacío, no se valida.
+
+        if (afiliado.getPrimerNombre() == null || afiliado.getPrimerNombre().isEmpty()) {
+            throw new GlobalExcepcion("El primer nombre no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        // 'Segundo nombre' puede estar vacío, no se valida.
+
+        if (afiliado.getFechaNacimiento() == null) {
+            throw new GlobalExcepcion("La fecha de nacimiento no puede estar vacía.", HttpStatus.BAD_REQUEST);
+        }
+        if (afiliado.getGenero() == null || afiliado.getGenero().isEmpty()) {
+            throw new GlobalExcepcion("El género no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (afiliado.getCodigoMunicipio() == null || afiliado.getCodigoMunicipio().isEmpty()) {
+            throw new GlobalExcepcion("El código del municipio no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (afiliado.getIndicador() == null || afiliado.getIndicador().isEmpty()) {
+            throw new GlobalExcepcion("El indicador no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (afiliado.getTelefono() == null || afiliado.getTelefono().isEmpty()) {
+            throw new GlobalExcepcion("El teléfono no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (afiliado.getDireccion() == null || afiliado.getDireccion().isEmpty()) {
+            throw new GlobalExcepcion("La dirección no puede estar vacía.", HttpStatus.BAD_REQUEST);
+        }
+        /*if (afiliado.getEmail() == null || afiliado.getEmail().isEmpty()) {
+            throw new GlobalExcepcion("El email no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }*/
+        if (afiliado.getFechaIngreso() == null) {
+            throw new GlobalExcepcion("La fecha de ingreso no puede estar vacía.", HttpStatus.BAD_REQUEST);
+        }
+        /*if (afiliado.getFechaRetiro() == null) {
+            throw new GlobalExcepcion("La fecha de retiro no puede estar vacía.", HttpStatus.BAD_REQUEST);
+        }*/
+    }
+
 
 }
