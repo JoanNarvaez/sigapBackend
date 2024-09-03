@@ -8,10 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+//anotaciones
 @Service
 @RequiredArgsConstructor
 public class EmpresaServiceImpl implements EmpresaService {
-
+//inyeccion de dependencia
+    //variable final e suna constante tiene que estar creadas
     private final EmpresaRepository empresaRepository;
 
     @Override
