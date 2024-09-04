@@ -54,6 +54,8 @@ public class RepresentanteLegalServiceImpl implements RepresentateLegalService {
 
 
         return representanteLegalRepository.save(representanteLegalBd);
+
+
     }
 
     @Override

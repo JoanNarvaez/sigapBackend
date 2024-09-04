@@ -42,9 +42,14 @@ public class EmpresaServiceImpl implements EmpresaService {
         empresaBd.setActividadEconomica(empresa.getActividadEconomica());
         empresaBd.setDigitoVerificacion(empresa.getDigitoVerificacion());
 
+
         return empresaRepository.save(empresaBd);
 
+
     }
+
+
+
 
     @Override
     public Empresa obtenerPorId(Long id) {
