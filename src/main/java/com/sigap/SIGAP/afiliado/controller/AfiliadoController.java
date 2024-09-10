@@ -1,6 +1,7 @@
 package com.sigap.SIGAP.afiliado.controller;
 
 import com.sigap.SIGAP.afiliado.entity.Afiliado;
+import com.sigap.SIGAP.afiliado.repository.AfiliadoRepository;
 import com.sigap.SIGAP.afiliado.service.AfiliadoServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,9 @@ public class AfiliadoController {
         return new ResponseEntity<>(afiliadoService.registrar(afiliado), HttpStatus.OK);
     }
 
-    @PutMapping("/actualizar")
-    public ResponseEntity<Afiliado> actualizar(@RequestBody Afiliado afiliado) {
-        return new ResponseEntity<>(afiliadoService.actualizar(afiliado), HttpStatus.OK);
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<Afiliado> actualizar(@PathVariable Long id, @RequestBody Afiliado afiliado) {
+        return new ResponseEntity<>(afiliadoService.actualizar(id,afiliado), HttpStatus.OK);
     }
 
     @GetMapping("/consultar-por-id/{id}")

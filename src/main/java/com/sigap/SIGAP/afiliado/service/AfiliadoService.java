@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AfiliadoService  {
         Afiliado registrar(Afiliado afiliado);
-        Afiliado actualizar(Afiliado afiliado);
+        Afiliado actualizar(long id,Afiliado afiliado);
         Afiliado obtenerPorId(Long id);
         List<Afiliado> ObtenerTodos();
 

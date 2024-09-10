@@ -34,8 +34,8 @@ public class AfiliadoServiceImpl implements AfiliadoService{
     }
 
     @Override
-    public Afiliado actualizar(Afiliado afiliado) {
-        Afiliado afiliadoBd = afiliadoRepository.findById(afiliado.getId()).orElseThrow();
+    public Afiliado actualizar(long id,Afiliado afiliado) {
+        Afiliado afiliadoBd = afiliadoRepository.findById(id).orElseThrow();
 
         validarAfiliado(afiliado);
 
@@ -55,9 +55,43 @@ public class AfiliadoServiceImpl implements AfiliadoService{
         afiliadoBd.setFechaIngreso(afiliado.getFechaIngreso());
         afiliadoBd.setFechaRetiro(afiliado.getFechaRetiro());
 
+        System.out.println("Afiliado actualizado: " + afiliadoBd);
 
         return afiliadoRepository.save(afiliadoBd);
     }
+   /* public Afiliado actualizar(long id, Afiliado afiliado) {
+        // Buscar el afiliado en la base de datos por su ID
+        Afiliado afiliadoBd = afiliadoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Afiliado no encontrado con el ID: " + id));
+
+        // Validar los datos del afiliado antes de proceder con la actualización
+        validarAfiliado(afiliado);
+
+        // Actualizar los campos del afiliado con los nuevos datos
+        afiliadoBd.setPrimerNombre(afiliado.getPrimerNombre());
+        afiliadoBd.setSegundoNombre(afiliado.getSegundoNombre());
+        afiliadoBd.setTipoDocumento(afiliado.getTipoDocumento());
+        afiliadoBd.setNumeroIdentificacion(afiliado.getNumeroIdentificacion());
+        afiliadoBd.setPrimerApeliido(afiliado.getPrimerApeliido());
+        afiliadoBd.setSegundoApeliido(afiliado.getSegundoApeliido());
+        afiliadoBd.setFechaNacimiento(afiliado.getFechaNacimiento());
+        afiliadoBd.setGenero(afiliado.getGenero());
+        afiliadoBd.setCodigoMunicipio(afiliado.getCodigoMunicipio());
+        afiliadoBd.setIndicador(afiliado.getIndicador());
+        afiliadoBd.setTelefono(afiliado.getTelefono());
+        afiliadoBd.setDireccion(afiliado.getDireccion());
+        afiliadoBd.setEmail(afiliado.getEmail());
+        afiliadoBd.setFechaIngreso(afiliado.getFechaIngreso());
+        afiliadoBd.setFechaRetiro(afiliado.getFechaRetiro());
+
+        // Imprimir en la consola que el afiliado ha sido actualizado
+        System.out.println("Afiliado actualizado: " + afiliadoBd);
+
+        // Guardar los cambios en la base de datos y retornar el objeto actualizado
+        return afiliadoRepository.save(afiliadoBd);
+    }*/
+
+
 
     @Override
     public Afiliado obtenerPorId(Long id) {
