@@ -1,9 +1,9 @@
-package com.sigap.SIGAP.representantelegal.service;
+package com.sigap.SIGAP.representante_legal.service;
 
 
 import com.sigap.SIGAP.excepciones.GlobalExcepcion;
-import com.sigap.SIGAP.representantelegal.entity.RepresentanteLegal;
-import com.sigap.SIGAP.representantelegal.repository.RepresentanteLegalRepository;
+import com.sigap.SIGAP.representante_legal.entity.RepresentanteLegal;
+import com.sigap.SIGAP.representante_legal.repository.RepresentanteLegalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

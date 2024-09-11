@@ -5,6 +5,7 @@ import com.sigap.SIGAP.afiliado.entity.Afiliado;
 import com.sigap.SIGAP.afiliado.repository.AfiliadoRepository;
 import com.sigap.SIGAP.excepciones.GlobalExcepcion;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AfiliadoServiceImpl implements AfiliadoService{
 
     private final AfiliadoRepository afiliadoRepository;
@@ -19,25 +21,21 @@ public class AfiliadoServiceImpl implements AfiliadoService{
 
     @Override
     public Afiliado registrar(Afiliado afiliado) {
-
         validarAfiliado(afiliado);
-
-
         afiliadoRepository.findByNumeroIdentificacion(afiliado.getNumeroIdentificacion()).ifPresent(existeNumIdentificacion -> {
             throw new GlobalExcepcion("El Numero de Identificacion " + existeNumIdentificacion.getNumeroIdentificacion() + " ya existe."
                     , HttpStatus.BAD_REQUEST);
         });
 
         return afiliadoRepository.save(afiliado);
-
-
     }
 
     @Override
     public Afiliado actualizar(long id,Afiliado afiliado) {
+        log.info("actualizar afiliado");
+        validarAfiliado(afiliado);
         Afiliado afiliadoBd = afiliadoRepository.findById(id).orElseThrow();
 
-        validarAfiliado(afiliado);
 
         afiliadoBd.setPrimerNombre(afiliado.getPrimerNombre());
         afiliadoBd.setSegundoNombre(afiliado.getSegundoNombre());
@@ -54,44 +52,9 @@ public class AfiliadoServiceImpl implements AfiliadoService{
         afiliadoBd.setEmail(afiliado.getEmail());
         afiliadoBd.setFechaIngreso(afiliado.getFechaIngreso());
         afiliadoBd.setFechaRetiro(afiliado.getFechaRetiro());
-
-        System.out.println("Afiliado actualizado: " + afiliadoBd);
 
         return afiliadoRepository.save(afiliadoBd);
     }
-   /* public Afiliado actualizar(long id, Afiliado afiliado) {
-        // Buscar el afiliado en la base de datos por su ID
-        Afiliado afiliadoBd = afiliadoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Afiliado no encontrado con el ID: " + id));
-
-        // Validar los datos del afiliado antes de proceder con la actualización
-        validarAfiliado(afiliado);
-
-        // Actualizar los campos del afiliado con los nuevos datos
-        afiliadoBd.setPrimerNombre(afiliado.getPrimerNombre());
-        afiliadoBd.setSegundoNombre(afiliado.getSegundoNombre());
-        afiliadoBd.setTipoDocumento(afiliado.getTipoDocumento());
-        afiliadoBd.setNumeroIdentificacion(afiliado.getNumeroIdentificacion());
-        afiliadoBd.setPrimerApeliido(afiliado.getPrimerApeliido());
-        afiliadoBd.setSegundoApeliido(afiliado.getSegundoApeliido());
-        afiliadoBd.setFechaNacimiento(afiliado.getFechaNacimiento());
-        afiliadoBd.setGenero(afiliado.getGenero());
-        afiliadoBd.setCodigoMunicipio(afiliado.getCodigoMunicipio());
-        afiliadoBd.setIndicador(afiliado.getIndicador());
-        afiliadoBd.setTelefono(afiliado.getTelefono());
-        afiliadoBd.setDireccion(afiliado.getDireccion());
-        afiliadoBd.setEmail(afiliado.getEmail());
-        afiliadoBd.setFechaIngreso(afiliado.getFechaIngreso());
-        afiliadoBd.setFechaRetiro(afiliado.getFechaRetiro());
-
-        // Imprimir en la consola que el afiliado ha sido actualizado
-        System.out.println("Afiliado actualizado: " + afiliadoBd);
-
-        // Guardar los cambios en la base de datos y retornar el objeto actualizado
-        return afiliadoRepository.save(afiliadoBd);
-    }*/
-
-
 
     @Override
     public Afiliado obtenerPorId(Long id) {
@@ -100,9 +63,20 @@ public class AfiliadoServiceImpl implements AfiliadoService{
                         , HttpStatus.NOT_FOUND));
     }
 
+
     @Override
-        public List<Afiliado> ObtenerTodos() { return afiliadoRepository.findAll();
-        }
+    public List<Afiliado> ObtenerTodos() {
+        log.info("consultar todos los afiliados");
+        return  afiliadoRepository.findAllByOrderById();
+    }
+    @Override
+    public String eliminar(Long id) {
+        Afiliado afiliadoBd = afiliadoRepository.findById(id).orElseThrow();
+
+        afiliadoRepository.delete(afiliadoBd);
+
+        return "Afiliado eliminado";
+    }
 
     private void validarAfiliado(Afiliado afiliado) {
         if (afiliado.getTipoDocumento() == null || afiliado.getTipoDocumento().isEmpty()) {

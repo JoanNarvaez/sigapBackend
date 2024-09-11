@@ -1,11 +1,9 @@
-package com.sigap.SIGAP.representantelegal.entity;
+package com.sigap.SIGAP.representante_legal.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDate;
 
 @Entity //esto es una eintidad en la base de datos
 @Table(name = "representantelegal")

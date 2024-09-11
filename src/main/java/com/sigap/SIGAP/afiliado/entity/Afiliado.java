@@ -13,16 +13,11 @@ import java.time.LocalDate;
 @Data
 @RequiredArgsConstructor
 
-
-
 public class Afiliado {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
 
     @JsonProperty("tipo_documento")
     @Column(length = 2, nullable = false)

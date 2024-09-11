@@ -1,7 +1,7 @@
-package com.sigap.SIGAP.representantelegal.repository;
+package com.sigap.SIGAP.representante_legal.repository;
 
 
-import com.sigap.SIGAP.representantelegal.entity.RepresentanteLegal;
+import com.sigap.SIGAP.representante_legal.entity.RepresentanteLegal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

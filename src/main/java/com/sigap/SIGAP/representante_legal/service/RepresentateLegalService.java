@@ -1,7 +1,7 @@
-package com.sigap.SIGAP.representantelegal.service;
+package com.sigap.SIGAP.representante_legal.service;
 
 
-import com.sigap.SIGAP.representantelegal.entity.RepresentanteLegal;
+import com.sigap.SIGAP.representante_legal.entity.RepresentanteLegal;
 
 import java.util.List;
 

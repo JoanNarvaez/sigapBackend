@@ -10,5 +10,6 @@ public interface AfiliadoService  {
         Afiliado actualizar(long id,Afiliado afiliado);
         Afiliado obtenerPorId(Long id);
         List<Afiliado> ObtenerTodos();
+        String eliminar(Long id);
 
 }

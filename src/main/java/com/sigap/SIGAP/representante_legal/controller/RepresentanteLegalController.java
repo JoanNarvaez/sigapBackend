@@ -1,7 +1,7 @@
-package com.sigap.SIGAP.representantelegal.controller;
+package com.sigap.SIGAP.representante_legal.controller;
 
-import com.sigap.SIGAP.representantelegal.entity.RepresentanteLegal;
-import com.sigap.SIGAP.representantelegal.service.RepresentanteLegalServiceImpl;
+import com.sigap.SIGAP.representante_legal.entity.RepresentanteLegal;
+import com.sigap.SIGAP.representante_legal.service.RepresentanteLegalServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
