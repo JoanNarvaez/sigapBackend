@@ -16,13 +16,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class EmpresaServiceImpl implements EmpresaService {
-//inyeccion de dependencia
+    //inyeccion de dependencia
     //variable final e suna constante tiene que estar creadas
     private final EmpresaRepository empresaRepository;
 
     @Override
     public Empresa registrar(Empresa empresa) {
-        //validarEmpresa(empresa);
+
         empresaRepository.findByNumeroNit(empresa.getNumeroNit()).ifPresent(existeNumeroNit -> {
             throw new GlobalExcepcion("La empresa con NIT " + existeNumeroNit.getNumeroNit() + " ya existe."
                     , HttpStatus.BAD_REQUEST);
@@ -81,7 +81,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
 
     private void validarEmpresa(Empresa empresa) {
-        List<String> errores = new ArrayList<>();
+        //List<String> errores = new ArrayList<>();
 
         if (empresa.getTipoIdentificacion() == null || empresa.getTipoIdentificacion().isEmpty()) {
             throw new GlobalExcepcion("El tipo de identificación no puede estar vacío.", HttpStatus.BAD_REQUEST);

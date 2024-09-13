@@ -79,7 +79,7 @@ public class AfiliadoServiceImpl implements AfiliadoService{
         return "Afiliado eliminado";
     }
 
-   /* private void validarAfiliado(Afiliado afiliado) {
+    private void validarAfiliado(Afiliado afiliado) {
         if (afiliado.getTipoDocumento() == null || afiliado.getTipoDocumento().isEmpty()) {
             throw new GlobalExcepcion("El tipo de documento no puede estar vacío.", HttpStatus.BAD_REQUEST);
         }
@@ -114,17 +114,17 @@ public class AfiliadoServiceImpl implements AfiliadoService{
         if (afiliado.getDireccion() == null || afiliado.getDireccion().isEmpty()) {
             throw new GlobalExcepcion("La dirección no puede estar vacía.", HttpStatus.BAD_REQUEST);
         }
-        /*if (afiliado.getEmail() == null || afiliado.getEmail().isEmpty()) {
+        if (afiliado.getEmail() == null || afiliado.getEmail().isEmpty()) {
             throw new GlobalExcepcion("El email no puede estar vacío.", HttpStatus.BAD_REQUEST);
-        }*/
-        /*if (afiliado.getFechaIngreso() == null) {
+        }
+        if (afiliado.getFechaIngreso() == null) {
             throw new GlobalExcepcion("La fecha de ingreso no puede estar vacía.", HttpStatus.BAD_REQUEST);
-        }*/
-        /*if (afiliado.getFechaRetiro() == null) {
+        }
+        if (afiliado.getFechaRetiro() == null) {
             throw new GlobalExcepcion("La fecha de retiro no puede estar vacía.", HttpStatus.BAD_REQUEST);
-        }*/
-   // }
-   private void validarAfiliado(Afiliado afiliado) {
+        }
+   }
+   /*private void validarAfiliado(Afiliado afiliado) {
        List<String> errores = new ArrayList<>();
 
        if (afiliado.getTipoDocumento() == null || afiliado.getTipoDocumento().isEmpty()) {
@@ -165,7 +165,7 @@ public class AfiliadoServiceImpl implements AfiliadoService{
        if (!errores.isEmpty()) {
            throw new GlobalExcepcion(String.join(" ", errores), HttpStatus.BAD_REQUEST);
        }
-   }
+   }*/
 
 
 }

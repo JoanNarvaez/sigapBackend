@@ -44,13 +44,15 @@ public class RepresentanteLegal {
     @Column(length = 5, nullable = false)
     private String codigoMunicipio;
 
-
+    @JsonProperty("telefono")
     @Column(length = 22, nullable = false)
     private String telefono;
 
+    @JsonProperty("direccion")
     @Column(length = 200, nullable = false)
     private String direccion;
 
+    @JsonProperty("email")
     @Column(length = 80,nullable = false)
     private String email;
 
