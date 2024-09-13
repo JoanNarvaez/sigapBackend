@@ -25,9 +25,9 @@ public class RepresentanteLegalController {
         return new ResponseEntity<>(representanteLegalService.registrar(representanteLegal), HttpStatus.OK);
     }
 
-    @PutMapping("/actualizar")
-    public ResponseEntity<RepresentanteLegal> actualizar(@RequestBody RepresentanteLegal representanteLegal) {
-        return new ResponseEntity<>(representanteLegalService.actualizar(representanteLegal), HttpStatus.OK);
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<RepresentanteLegal> actualizar(@PathVariable Long id, @RequestBody RepresentanteLegal representanteLegal) {
+        return new ResponseEntity<>(representanteLegalService.actualizar(id,representanteLegal), HttpStatus.OK);
     }
 
     @GetMapping("/consultar-por-id/{id}")

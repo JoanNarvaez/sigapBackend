@@ -5,12 +5,14 @@ import com.sigap.SIGAP.excepciones.GlobalExcepcion;
 import com.sigap.SIGAP.representante_legal.entity.RepresentanteLegal;
 import com.sigap.SIGAP.representante_legal.repository.RepresentanteLegalRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RepresentanteLegalServiceImpl implements RepresentateLegalService {
 
 
@@ -34,11 +36,11 @@ public class RepresentanteLegalServiceImpl implements RepresentateLegalService {
     }
 
     @Override
-    public RepresentanteLegal actualizar(RepresentanteLegal representanteLegal) {
-
+    public RepresentanteLegal actualizar(long id,RepresentanteLegal representanteLegal) {
+        validarRepresentanteLegal(representanteLegal);
         RepresentanteLegal representanteLegalBd = representanteLegalRepository.findById(representanteLegal.getId()).orElseThrow();
 
-        validarRepresentanteLegal(representanteLegal);
+
 
         representanteLegalBd.setTipoIdentificacion(representanteLegal.getTipoIdentificacion());
         representanteLegalBd.setNumeroIdentificacion(representanteLegal.getNumeroIdentificacion());

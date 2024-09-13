@@ -4,6 +4,7 @@ import com.sigap.SIGAP.empresa.entity.Empresa;
 import com.sigap.SIGAP.empresa.repository.EmpresaRepository;
 import com.sigap.SIGAP.excepciones.GlobalExcepcion;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +14,17 @@ import java.util.List;
 //anotaciones
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmpresaServiceImpl implements EmpresaService {
-//inyeccion de dependencia
+    //inyeccion de dependencia
     //variable final e suna constante tiene que estar creadas
     private final EmpresaRepository empresaRepository;
 
     @Override
     public Empresa registrar(Empresa empresa) {
-        validarEmpresa(empresa);
-        empresaRepository.findByNumeroNit(empresa.getNumeroNit()).ifPresent(existeEmpresa -> {
-            throw new GlobalExcepcion("La empresa con NIT " + existeEmpresa.getNumeroNit() + " ya existe."
+
+        empresaRepository.findByNumeroNit(empresa.getNumeroNit()).ifPresent(existeNumeroNit -> {
+            throw new GlobalExcepcion("La empresa con NIT " + existeNumeroNit.getNumeroNit() + " ya existe."
                     , HttpStatus.BAD_REQUEST);
         });
 
@@ -32,8 +34,10 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public Empresa actualizar(long id,Empresa empresa) {
-        Empresa empresaBd = empresaRepository.findById(empresa.getId()).orElseThrow();
         validarEmpresa(empresa);
+        log.info("actualizar empresa");
+        Empresa empresaBd = empresaRepository.findById(empresa.getId()).orElseThrow();
+
 
         // Asignación de valores de 'empresa' a 'empresaBd'
         empresaBd.setTipoIdentificacion(empresa.getTipoIdentificacion());
@@ -77,7 +81,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
 
     private void validarEmpresa(Empresa empresa) {
-        List<String> errores = new ArrayList<>();
+        //List<String> errores = new ArrayList<>();
 
         if (empresa.getTipoIdentificacion() == null || empresa.getTipoIdentificacion().isEmpty()) {
             throw new GlobalExcepcion("El tipo de identificación no puede estar vacío.", HttpStatus.BAD_REQUEST);
