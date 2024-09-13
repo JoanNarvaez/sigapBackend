@@ -7,7 +7,7 @@ import java.util.List;
 public interface EmpresaService {
     Empresa registrar(Empresa empresa);
 
-    Empresa actualizar(Empresa empresa);
+    Empresa actualizar(long id, Empresa empresa);
 
     Empresa obtenerPorId(Long id);
 

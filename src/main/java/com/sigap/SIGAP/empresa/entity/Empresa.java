@@ -52,6 +52,30 @@ public class Empresa {
     @Column(length = 80, nullable = false)
     private String email;
 
+    @JsonProperty("valor_activo")
+    @Column(length = 20, nullable = false)
+    private Integer valorActivo;
+
+    @JsonProperty("valor_pasivo")
+    @Column(length = 20, nullable = false)
+    private Integer valorPasivo;
+
+    @JsonProperty("valor_patrimonio")
+    @Column(length = 20, nullable = false)
+    private Integer valorPatrimonio;
+
+    @JsonProperty("valor_patrimonio_sin_re")
+    @Column(length = 20, nullable = false)
+    private Integer valorPatrimonioSin;
+
+    @JsonProperty("valor_reserva_especial")
+    @Column(length = 20, nullable = false)
+    private Integer valorReservaE;
+
+    @JsonProperty("codigo_Contable")
+    @Column(length = 8, nullable = false)
+    private Integer valorContable;
+
 
     @PrePersist
     private void prePersist() {
