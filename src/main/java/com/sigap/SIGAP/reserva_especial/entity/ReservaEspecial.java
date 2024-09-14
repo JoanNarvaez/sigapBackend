@@ -1,31 +1,40 @@
-package com.sigap.SIGAP.afiliado.entity;
+package com.sigap.SIGAP.reserva_especial.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-
-
-import java.time.LocalDate;
 @Entity //esto es una eintidad en la base de datos
-@Table(name = "afiliados")
+@Table(name = "reservaespecial")
 @Data
 @RequiredArgsConstructor
-
-public class Afiliado {
+public class ReservaEspecial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonProperty("tipo_documento")
+    @JsonProperty("tipo_identificacion")
     @Column(length = 2, nullable = false)
-    private String tipoDocumento;
+    private String tipoIdentificacion;
+
+    @JsonProperty("tipo_persona")
+    @Column(length = 1, nullable = false)
+    private Integer tipoPersona;
+
 
     @JsonProperty("numero_identificacion")
     @Column(length = 12, nullable = false, unique = true)
     private Integer numeroIdentificacion;
+
+    @JsonProperty("digito_verificacion")
+    @Column(length = 1)
+    private int digitoVerificacion;
+
+    @JsonProperty("razon_social")
+    @Column(length = 200)
+    private String razonSocial;
 
     @JsonProperty("primer_apellido")
     @Column(length = 60, nullable = false)
@@ -43,43 +52,26 @@ public class Afiliado {
     @Column(length = 60)
     private String segundoNombre;
 
-    @JsonProperty("fecha_nacimiento")
-    @Column(length = 10, nullable = false)
-    private LocalDate fechaNacimiento;
-
-
-    @Column(length = 1, nullable = false)
-    private String genero;
+    @JsonProperty("tarjeta_profecional")
+    @Column(length = 20)
+    private String tarjetaProfecional;
 
     @JsonProperty("codigo_municipio")
     @Column(length = 5, nullable = false)
     private String codigoMunicipio;
 
-    @Column(length = 1, nullable = false)
-    private String indicador;
 
     @Column(length = 22, nullable = false)
     private String telefono;
 
+
     @Column(length = 200, nullable = false)
     private String direccion;
 
-    @Column(length = 80)
+
+    @Column(length = 80,nullable = false)
     private String email;
 
-    @JsonProperty("fecha_ingreso")
-    @Column(length = 10, nullable = false)
-    private LocalDate fechaIngreso;
 
-    @JsonProperty("fecha_retiro")
-    @Column(length = 10)
-    private LocalDate fechaRetiro;
-
-    /*@PrePersist
-    private void prePersist() {
-        tipoIdentificacion = "NI";
-        tipoEntidad = 3;
-
-    }*/
 
 }
