@@ -35,6 +35,7 @@ public class EmpresaServiceImpl implements EmpresaService {
     @Override
     public Empresa actualizar(long id,Empresa empresa) {
         validarEmpresa(empresa);
+
         log.info("actualizar empresa");
         Empresa empresaBd = empresaRepository.findById(empresa.getId()).orElseThrow();
 
@@ -95,6 +96,19 @@ public class EmpresaServiceImpl implements EmpresaService {
             throw new GlobalExcepcion("El número NIT no puede estar vacío.", HttpStatus.BAD_REQUEST);
         }
 
+// Verificar que el NIT sea numérico y que no exceda los 12 caracteres
+        String numeroNit = String.valueOf(empresa.getNumeroNit());
+
+// Verificar que el NIT no tenga letras y que no exceda los 12 caracteres
+        if (!numeroNit.matches("\\d+")) {  // Solo permite dígitos (números)
+            throw new GlobalExcepcion("El número NIT solo puede contener dígitos numéricos.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (numeroNit.length() > 12) {
+            throw new GlobalExcepcion("El número NIT no puede exceder los 12 dígitos.", HttpStatus.BAD_REQUEST);
+        }
+
+
         if (empresa.getDigitoVerificacion() < 0 || empresa.getDigitoVerificacion() > 9) {
             throw new GlobalExcepcion("El dígito de verificación debe ser un número entre 0 y 9.", HttpStatus.BAD_REQUEST);
         }
@@ -141,6 +155,20 @@ public class EmpresaServiceImpl implements EmpresaService {
             throw new GlobalExcepcion("El valor contable no puede estar vacío.", HttpStatus.BAD_REQUEST);
         }
     }
+
+   /* private void validateNit(String numeroNit) {
+        if (numeroNit == null){
+            throw new GlobalExcepcion("El número NIT no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!numeroNit.matches("\\d+")) {
+            throw new GlobalExcepcion("El número NIT solo puede contener dígitos numéricos.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (numeroNit.length() > 12) {
+            throw new GlobalExcepcion("El número NIT no puede exceder los 12 dígitos.", HttpStatus.BAD_REQUEST);
+        }
+    }*/
 
 
 }
