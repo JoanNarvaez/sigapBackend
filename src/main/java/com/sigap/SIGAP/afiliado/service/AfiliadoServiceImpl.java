@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AfiliadoServiceImpl implements AfiliadoService{
+public class AfiliadoServiceImpl implements AfiliadoService {
 
     private final AfiliadoRepository afiliadoRepository;
 
@@ -32,7 +32,7 @@ public class AfiliadoServiceImpl implements AfiliadoService{
     }
 
     @Override
-    public Afiliado actualizar(long id,Afiliado afiliado) {
+    public Afiliado actualizar(long id, Afiliado afiliado) {
         log.info("actualizar afiliado");
         validarAfiliado(afiliado);
         Afiliado afiliadoBd = afiliadoRepository.findById(id).orElseThrow();
@@ -68,8 +68,9 @@ public class AfiliadoServiceImpl implements AfiliadoService{
     @Override
     public List<Afiliado> ObtenerTodos() {
         log.info("consultar todos los afiliados");
-        return  afiliadoRepository.findAllByOrderById();
+        return afiliadoRepository.findAllByOrderById();
     }
+
     @Override
     public String eliminar(Long id) {
         Afiliado afiliadoBd = afiliadoRepository.findById(id).orElseThrow();
@@ -120,10 +121,10 @@ public class AfiliadoServiceImpl implements AfiliadoService{
         if (afiliado.getFechaIngreso() == null) {
             throw new GlobalExcepcion("La fecha de ingreso no puede estar vacía.", HttpStatus.BAD_REQUEST);
         }
-        if (afiliado.getFechaRetiro() == null) {
-            throw new GlobalExcepcion("La fecha de retiro no puede estar vacía.", HttpStatus.BAD_REQUEST);
-        }
-   }
+
+    }
+
+}
    /*private void validarAfiliado(Afiliado afiliado) {
        List<String> errores = new ArrayList<>();
 
@@ -168,4 +169,4 @@ public class AfiliadoServiceImpl implements AfiliadoService{
    }*/
 
 
-}
+
