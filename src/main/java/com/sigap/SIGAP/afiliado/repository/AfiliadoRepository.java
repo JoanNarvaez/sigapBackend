@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface AfiliadoRepository extends JpaRepository<Afiliado,Long>{
-    Optional<Afiliado> findByNumeroIdentificacion(Integer nidentificacion);
+    Optional<Afiliado> findByNumeroIdentificacion(String nidentificacion);
 
     List<Afiliado> findAllByOrderById();
 }

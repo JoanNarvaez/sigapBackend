@@ -21,12 +21,22 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 
 
     @Override
-    public Afiliado registrar(Afiliado afiliado) {
+    /*public Afiliado registrar(Afiliado afiliado) {
         validarAfiliado(afiliado);
         afiliadoRepository.findByNumeroIdentificacion(afiliado.getNumeroIdentificacion()).ifPresent(existeNumIdentificacion -> {
             throw new GlobalExcepcion("El Numero de Identificacion " + existeNumIdentificacion.getNumeroIdentificacion() + " ya existe."
                     , HttpStatus.BAD_REQUEST);
         });
+
+        return afiliadoRepository.save(afiliado);
+    }*/
+    public Afiliado registrar(Afiliado afiliado) {
+        validarAfiliado(afiliado);
+        afiliadoRepository.findByNumeroIdentificacion(afiliado.getNumeroIdentificacion())
+                .ifPresent(existeNumIdentificacion -> {
+                    throw new GlobalExcepcion("El Numero de Identificacion " + existeNumIdentificacion.getNumeroIdentificacion() + " ya existe."
+                            , HttpStatus.BAD_REQUEST);
+                });
 
         return afiliadoRepository.save(afiliado);
     }
@@ -87,6 +97,9 @@ public class AfiliadoServiceImpl implements AfiliadoService {
         }
         if (afiliado.getNumeroIdentificacion() == null) {
             throw new GlobalExcepcion("El número de identificación no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+       if (afiliado.getNumeroIdentificacion().length() >= 16) {
+            throw new GlobalExcepcion("El número de identificación no puede tener más de 16 caracteres.", HttpStatus.BAD_REQUEST);
         }
         if (afiliado.getPrimerApeliido() == null || afiliado.getPrimerApeliido().isEmpty()) {
             throw new GlobalExcepcion("El primer apellido no puede estar vacío.", HttpStatus.BAD_REQUEST);

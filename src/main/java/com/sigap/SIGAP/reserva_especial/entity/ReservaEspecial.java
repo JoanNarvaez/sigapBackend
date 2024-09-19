@@ -13,7 +13,7 @@ public class ReservaEspecial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id = 1L;
 
     @JsonProperty("tipo_identificacion")
     @Column(length = 2, nullable = false)
@@ -25,8 +25,8 @@ public class ReservaEspecial {
 
 
     @JsonProperty("numero_identificacion")
-    @Column(length = 12, nullable = false, unique = true)
-    private Integer numeroIdentificacion;
+    @Column(length = 16, nullable = false, unique = true)
+    private String numeroIdentificacion;
 
     @JsonProperty("digito_verificacion")
     @Column(length = 1)

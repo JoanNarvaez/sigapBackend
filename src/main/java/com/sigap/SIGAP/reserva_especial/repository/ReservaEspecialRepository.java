@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface ReservaEspecialRepository extends JpaRepository<ReservaEspecial,Long> {
-    Optional<ReservaEspecial> findByNumeroIdentificacion(Integer nidentificacion);
+    Optional<ReservaEspecial> findByNumeroIdentificacion(String nidentificacion);
 }
 

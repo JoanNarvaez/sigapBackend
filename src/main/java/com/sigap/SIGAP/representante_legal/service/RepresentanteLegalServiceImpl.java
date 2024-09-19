@@ -22,13 +22,16 @@ public class RepresentanteLegalServiceImpl implements RepresentateLegalService {
     @Override
     public RepresentanteLegal registrar(RepresentanteLegal representanteLegal) {
 
-        validarRepresentanteLegal(representanteLegal);
+        if (representanteLegalRepository.count() > 0) {
+            throw new GlobalExcepcion("Ya existe un representante legal registrada. No se puede crear otra.", HttpStatus.BAD_REQUEST);
+        }
 
+            representanteLegalRepository.findByNumeroIdentificacion(representanteLegal.getNumeroIdentificacion())
+                    .ifPresent(existeNumIdentificacion -> {
+                        throw new GlobalExcepcion("El Numero de Identificacion " + existeNumIdentificacion.getNumeroIdentificacion() + " ya existe."
+                                , HttpStatus.BAD_REQUEST);
+                    });
 
-        representanteLegalRepository.findByNumeroIdentificacion(representanteLegal.getNumeroIdentificacion()).ifPresent(existeNumIdentificacion -> {
-            throw new GlobalExcepcion("El Numero de Identificacion " + existeNumIdentificacion.getNumeroIdentificacion() + " ya existe."
-                    , HttpStatus.BAD_REQUEST);
-        });
 
         return representanteLegalRepository.save(representanteLegal);
 
@@ -77,6 +80,9 @@ public class RepresentanteLegalServiceImpl implements RepresentateLegalService {
         }
         if (representanteLegal.getNumeroIdentificacion() == null) {
             throw new GlobalExcepcion("El número de identificación no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (representanteLegal.getNumeroIdentificacion().length() >= 16) {
+            throw new GlobalExcepcion("El número de identificación no puede tener más de 16 caracteres.", HttpStatus.BAD_REQUEST);
         }
         if (representanteLegal.getPrimerApeliido() == null || representanteLegal.getPrimerApeliido().isEmpty()) {
             throw new GlobalExcepcion("El primer apellido no puede estar vacío.", HttpStatus.BAD_REQUEST);
