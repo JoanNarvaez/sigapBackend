@@ -82,7 +82,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
 
     private void validarEmpresa(Empresa empresa) {
-        //List<String> errores = new ArrayList<>();
+        List<String> errores = new ArrayList<>();
 
         if (empresa.getTipoIdentificacion() == null || empresa.getTipoIdentificacion().isEmpty()) {
             throw new GlobalExcepcion("El tipo de identificación no puede estar vacío.", HttpStatus.BAD_REQUEST);
@@ -155,27 +155,6 @@ public class EmpresaServiceImpl implements EmpresaService {
             throw new GlobalExcepcion("El valor contable no puede estar vacío.", HttpStatus.BAD_REQUEST);
         }
     }
-
-   /* private void validateNit(String numeroNit) {
-        if (numeroNit == null){
-            throw new GlobalExcepcion("El número NIT no puede estar vacío.", HttpStatus.BAD_REQUEST);
-        }
-
-        if (!numeroNit.matches("\\d+")) {
-            throw new GlobalExcepcion("El número NIT solo puede contener dígitos numéricos.", HttpStatus.BAD_REQUEST);
-        }
-
-        if (numeroNit.length() > 12) {
-            throw new GlobalExcepcion("El número NIT no puede exceder los 12 dígitos.", HttpStatus.BAD_REQUEST);
-        }
-    }*/
-
-
-
-
-
-
-
 
 
 }
