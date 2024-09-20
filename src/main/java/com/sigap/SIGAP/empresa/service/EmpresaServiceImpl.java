@@ -23,13 +23,25 @@ public class EmpresaServiceImpl implements EmpresaService {
     @Override
     public Empresa registrar(Empresa empresa) {
 
-        empresaRepository.findByNumeroNit(empresa.getNumeroNit()).ifPresent(existeNumeroNit -> {
+        /*empresaRepository.findByNumeroNit(empresa.getNumeroNit()).ifPresent(existeNumeroNit -> {
             throw new GlobalExcepcion("La empresa con NIT " + existeNumeroNit.getNumeroNit() + " ya existe."
                     , HttpStatus.BAD_REQUEST);
         });
 
         return empresaRepository.save(empresa);
 
+    }*/
+        if (empresaRepository.count() > 0) {
+            throw new GlobalExcepcion("Ya existe una empresa registrada. No se puede crear otra.", HttpStatus.BAD_REQUEST);
+        }
+
+        // Verificar si ya existe una empresa con el mismo NIT
+        empresaRepository.findByNumeroNit(empresa.getNumeroNit()).ifPresent(existeNumeroNit -> {
+            throw new GlobalExcepcion("La empresa con NIT " + existeNumeroNit.getNumeroNit() + " ya existe.", HttpStatus.BAD_REQUEST);
+        });
+
+        // Si no existe ninguna empresa, procedemos a guardar
+        return empresaRepository.save(empresa);
     }
 
     @Override

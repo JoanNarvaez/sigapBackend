@@ -23,7 +23,9 @@ public class ReservaEspecialServiceImpl implements ReservaEspecialService {
     @Override
     public ReservaEspecial registrar(ReservaEspecial reservaEspecial) {
 
-        //validarReservaEspecial(reservaEspecial);
+     if(reservaEspecialRepository.count()>0) {
+         throw new GlobalExcepcion("Ya existe una reserva especial registrada. No se puede crear otra.", HttpStatus.BAD_REQUEST);
+     }
 
 
         reservaEspecialRepository.findByNumeroIdentificacion(reservaEspecial.getNumeroIdentificacion()).ifPresent(existeNumIdentificacion -> {
@@ -83,8 +85,11 @@ public class ReservaEspecialServiceImpl implements ReservaEspecialService {
         if (reservaEspecial.getTipoPersona() < 1 || reservaEspecial.getTipoPersona() > 3) {
             throw new GlobalExcepcion("El tipo de persona debe estar entre 1 y 3.", HttpStatus.BAD_REQUEST);
         }
-        if (reservaEspecial.getNumeroIdentificacion() == null || reservaEspecial.getNumeroIdentificacion() <= 0) {
-            throw new GlobalExcepcion("El número de identificación no puede estar vacío o ser negativo.", HttpStatus.BAD_REQUEST);
+        if (reservaEspecial.getNumeroIdentificacion() == null) {
+            throw new GlobalExcepcion("El número de identificación no puede estar vacío.", HttpStatus.BAD_REQUEST);
+        }
+        if (reservaEspecial.getNumeroIdentificacion().length() >= 16) {
+            throw new GlobalExcepcion("El número de identificación no puede tener más de 16 caracteres.", HttpStatus.BAD_REQUEST);
         }
         if (reservaEspecial.getDigitoVerificacion() < 0 || reservaEspecial.getDigitoVerificacion() > 9) {
             throw new GlobalExcepcion("El dígito de verificación debe estar entre 0 y 9.", HttpStatus.BAD_REQUEST);

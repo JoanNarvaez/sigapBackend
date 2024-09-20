@@ -13,7 +13,7 @@ public class Empresa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id = 1L;
 
     @JsonProperty("tipo_identificacion")
     @Column(length = 2, nullable = false)

@@ -24,8 +24,8 @@ public class Afiliado {
     private String tipoDocumento;
 
     @JsonProperty("numero_identificacion")
-    @Column(length = 12, nullable = false, unique = true)
-    private Integer numeroIdentificacion;
+    @Column(length = 16, nullable = false, unique = true)
+    private String numeroIdentificacion;
 
     @JsonProperty("primer_apellido")
     @Column(length = 60, nullable = false)

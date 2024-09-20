@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 @Repository
 public interface RepresentanteLegalRepository extends JpaRepository<RepresentanteLegal,Long> {
-    Optional<RepresentanteLegal> findByNumeroIdentificacion(Integer nidentificacion);
+    Optional<RepresentanteLegal> findByNumeroIdentificacion(String nidentificacion);
 }
 
