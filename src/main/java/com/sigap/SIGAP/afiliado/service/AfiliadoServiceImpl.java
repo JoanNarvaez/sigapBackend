@@ -129,9 +129,9 @@ public class AfiliadoServiceImpl implements AfiliadoService {
         if (afiliado.getDireccion() == null || afiliado.getDireccion().isEmpty()) {
             throw new GlobalExcepcion("La dirección no puede estar vacía.", HttpStatus.BAD_REQUEST);
         }
-        if (afiliado.getEmail() == null || afiliado.getEmail().isEmpty()) {
+       /* if (afiliado.getEmail() == null || afiliado.getEmail().isEmpty()) {
             throw new GlobalExcepcion("El email no puede estar vacío.", HttpStatus.BAD_REQUEST);
-        }
+        }*/
         if (afiliado.getFechaIngreso() == null) {
             throw new GlobalExcepcion("La fecha de ingreso no puede estar vacía.", HttpStatus.BAD_REQUEST);
         }
