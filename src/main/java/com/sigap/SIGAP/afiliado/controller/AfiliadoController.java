@@ -23,12 +23,13 @@ public class AfiliadoController {
     @PostMapping("/registrar")
     public ResponseEntity<Afiliado> registrar(
             @RequestBody Afiliado afiliado) {
-
+        convertirAMayusculas(afiliado);
         return new ResponseEntity<>(afiliadoService.registrar(afiliado), HttpStatus.OK);
     }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Afiliado> actualizar(@PathVariable Long id, @RequestBody Afiliado afiliado) {
+        convertirAMayusculas(afiliado);
         return new ResponseEntity<>(afiliadoService.actualizar(id, afiliado), HttpStatus.OK);
     }
 
@@ -52,5 +53,29 @@ public class AfiliadoController {
         return new ResponseEntity<>(afiliadoService.eliminar(id), HttpStatus.OK);
     }
 
+    private Afiliado convertirAMayusculas(Afiliado afiliado) {
+
+
+        if (afiliado.getPrimerApeliido() != null) {
+            afiliado.setPrimerApeliido(afiliado.getPrimerApeliido().toUpperCase());
+        }
+        if (afiliado.getSegundoApeliido() != null) {
+            afiliado.setSegundoApeliido(afiliado.getSegundoApeliido().toUpperCase());
+        }
+        if (afiliado.getPrimerNombre() != null) {
+            afiliado.setPrimerNombre(afiliado.getPrimerNombre().toUpperCase());
+        }
+        if (afiliado.getSegundoNombre() != null) {
+            afiliado.setSegundoNombre(afiliado.getSegundoNombre().toUpperCase());
+        }
+
+        if (afiliado.getDireccion() != null) {
+            afiliado.setDireccion(afiliado.getDireccion().toUpperCase());
+        }
+        if (afiliado.getEmail() != null) {
+            afiliado.setEmail(afiliado.getEmail().toUpperCase());
+        }
+        return afiliado;
+    }
 
 }
