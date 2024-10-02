@@ -30,7 +30,7 @@ public class DownloadController {
         ByteArrayInputStream in = new ByteArrayInputStream(data.getBytes());
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=all_data.txt");
+        headers.add("Content-Disposition", "attachment; filename=ACO245RACOAAAMMDDNI999999999999.txt");
 
         return ResponseEntity
                 .ok()

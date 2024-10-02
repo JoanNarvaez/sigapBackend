@@ -23,12 +23,13 @@ public class ReservaEspecialController {
     @PostMapping("/registrar")
     public ResponseEntity<ReservaEspecial> registrar(
             @RequestBody ReservaEspecial reservaEspecial) {
-
+        convertirAMayusculas(reservaEspecial);
         return new ResponseEntity<>(reservaEspecialService.registrar(reservaEspecial), HttpStatus.OK);
     }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<ReservaEspecial> actualizar(@PathVariable Long id, @RequestBody ReservaEspecial reservaEspecial) {
+        convertirAMayusculas(reservaEspecial);
         return new ResponseEntity<>(reservaEspecialService.actualizar(id,reservaEspecial), HttpStatus.OK);
     }
 
@@ -43,7 +44,40 @@ public class ReservaEspecialController {
 
         return new ResponseEntity<>(reservaEspecialService.ObtenerTodos(), HttpStatus.OK);
     }
+    private ReservaEspecial convertirAMayusculas(ReservaEspecial reservaEspecial) {
 
+        if (reservaEspecial.getRazonSocial() != null) {
+            reservaEspecial.setRazonSocial(reservaEspecial.getRazonSocial().toUpperCase());
+        }
+        if (reservaEspecial.getPrimerApeliido() != null) {
+            reservaEspecial.setPrimerApeliido(reservaEspecial.getPrimerApeliido().toUpperCase());
+        }
+        if (reservaEspecial.getSegundoApeliido() != null) {
+            reservaEspecial.setSegundoApeliido(reservaEspecial.getSegundoApeliido().toUpperCase());
+        }
+        if (reservaEspecial.getPrimerNombre() != null) {
+            reservaEspecial.setPrimerNombre(reservaEspecial.getPrimerNombre().toUpperCase());
+        }
+        if (reservaEspecial.getSegundoNombre() != null) {
+            reservaEspecial.setSegundoNombre(reservaEspecial.getSegundoNombre().toUpperCase());
+        }
+        if (reservaEspecial.getTarjetaProfecional() != null) {
+            reservaEspecial.setTarjetaProfecional(reservaEspecial.getTarjetaProfecional().toUpperCase());
+        }
+        if (reservaEspecial.getCodigoMunicipio() != null) {
+            reservaEspecial.setCodigoMunicipio(reservaEspecial.getCodigoMunicipio().toUpperCase());
+        }
+        if (reservaEspecial.getTelefono() != null) {
+            reservaEspecial.setTelefono(reservaEspecial.getTelefono().toUpperCase());
+        }
+        if (reservaEspecial.getDireccion() != null) {
+            reservaEspecial.setDireccion(reservaEspecial.getDireccion().toUpperCase());
+        }
+        if (reservaEspecial.getEmail() != null) {
+            reservaEspecial.setEmail(reservaEspecial.getEmail().toUpperCase());
+        }
+        return reservaEspecial;
+    }
 }
 
 

@@ -22,12 +22,13 @@ public class EmpresaController {
     @PostMapping("/registrar")
     public ResponseEntity<Empresa> registrar(
             @RequestBody Empresa empresa) {
-
+        convertirAMayusculas(empresa);
         return new ResponseEntity<>(empresaService.registrar(empresa), HttpStatus.OK);
     }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Empresa> actualizar(@PathVariable Long id, @RequestBody Empresa empresa) {
+        convertirAMayusculas(empresa);
         return new ResponseEntity<>(empresaService.actualizar(id, empresa), HttpStatus.OK);
     }
 
@@ -41,6 +42,26 @@ public class EmpresaController {
     public ResponseEntity<List<Empresa>> consultarTodos() {
 
         return new ResponseEntity<>(empresaService.ObtenerTodos(), HttpStatus.OK);
+    }
+
+    private Empresa convertirAMayusculas(Empresa empresa) {
+
+        if (empresa.getRazonSocial() != null) {
+            empresa.setRazonSocial(empresa.getRazonSocial().toUpperCase());
+        }
+        if (empresa.getCodigoMunicipio() != null) {
+            empresa.setCodigoMunicipio(empresa.getCodigoMunicipio().toUpperCase());
+        }
+        if (empresa.getTelefono() != null) {
+            empresa.setTelefono(empresa.getTelefono().toUpperCase());
+        }
+        if (empresa.getDireccion() != null) {
+            empresa.setDireccion(empresa.getDireccion().toUpperCase());
+        }
+        if (empresa.getEmail() != null) {
+            empresa.setEmail(empresa.getEmail().toUpperCase());
+        }
+        return empresa;
     }
 
 }

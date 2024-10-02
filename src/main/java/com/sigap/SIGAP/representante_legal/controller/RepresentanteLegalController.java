@@ -21,12 +21,13 @@ public class RepresentanteLegalController {
     @PostMapping("/registrar")
     public ResponseEntity<RepresentanteLegal> registrar(
             @RequestBody RepresentanteLegal representanteLegal) {
-
+        convertirAMayusculas(representanteLegal);
         return new ResponseEntity<>(representanteLegalService.registrar(representanteLegal), HttpStatus.OK);
     }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<RepresentanteLegal> actualizar(@PathVariable Long id, @RequestBody RepresentanteLegal representanteLegal) {
+        convertirAMayusculas(representanteLegal);
         return new ResponseEntity<>(representanteLegalService.actualizar(id,representanteLegal), HttpStatus.OK);
     }
 
@@ -40,6 +41,36 @@ public class RepresentanteLegalController {
     public ResponseEntity<List<RepresentanteLegal>> consultarTodos() {
 
         return new ResponseEntity<>(representanteLegalService.ObtenerTodos(), HttpStatus.OK);
+    }
+
+    private RepresentanteLegal convertirAMayusculas(RepresentanteLegal representanteLegal) {
+
+
+        if (representanteLegal.getPrimerApeliido() != null) {
+            representanteLegal.setPrimerApeliido(representanteLegal.getPrimerApeliido().toUpperCase());
+        }
+        if (representanteLegal.getSegundoApeliido() != null) {
+            representanteLegal.setSegundoApeliido(representanteLegal.getSegundoApeliido().toUpperCase());
+        }
+        if (representanteLegal.getPrimerNombre() != null) {
+            representanteLegal.setPrimerNombre(representanteLegal.getPrimerNombre().toUpperCase());
+        }
+        if (representanteLegal.getSegundoNombre() != null) {
+            representanteLegal.setSegundoNombre(representanteLegal.getSegundoNombre().toUpperCase());
+        }
+        if (representanteLegal.getCodigoMunicipio() != null) {
+            representanteLegal.setCodigoMunicipio(representanteLegal.getCodigoMunicipio().toUpperCase());
+        }
+        if (representanteLegal.getTelefono() != null) {
+            representanteLegal.setTelefono(representanteLegal.getTelefono().toUpperCase());
+        }
+        if (representanteLegal.getDireccion() != null) {
+            representanteLegal.setDireccion(representanteLegal.getDireccion().toUpperCase());
+        }
+        if (representanteLegal.getEmail() != null) {
+            representanteLegal.setEmail(representanteLegal.getEmail().toUpperCase());
+        }
+        return representanteLegal;
     }
 
 }

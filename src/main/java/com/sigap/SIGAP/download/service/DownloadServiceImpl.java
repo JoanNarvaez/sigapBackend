@@ -18,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +34,16 @@ public class DownloadServiceImpl{
 
     public String generateAllDataAsString() {
         StringBuilder sb = new StringBuilder();
+
+       /* List<Empresa> empresas = empresaService.ObtenerTodos();
+        Map<Long, RepresentanteLegal> representantesLegales = representateLegalService.ObtenerTodos().stream()
+                .collect(Collectors.toMap(RepresentanteLegal::getId, rl -> rl));
+
+        sb.append("EMPRESAS Y REPRESENTANTES LEGALES\n");
+        for (Empresa empresa : empresas) {
+            RepresentanteLegal representanteLegal = representantesLegales.get(empresa.getId());
+            sb.append(generateEmpresaHeader(empresa, representanteLegal)).append("\n");
+        }*/
 
         sb.append("AFILIADOS\n");
         sb.append(afiliadoService.ObtenerTodos().stream()
@@ -131,4 +143,17 @@ public class DownloadServiceImpl{
                 representanteLegal.getEmail()
         );
     }
+
+    /*private String generateEmpresaHeader(Empresa empresa, RepresentanteLegal representanteLegal) {
+        return String.format("EMPRESA: %s|NIT: %d-%d|REPRESENTANTE LEGAL: %s %s %s %s|ID: %s",
+                empresa.getRazonSocial(),
+                empresa.getNumeroNit(),
+                empresa.getDigitoVerificacion(),
+                representanteLegal.getPrimerNombre(),
+                representanteLegal.getSegundoNombre(),
+                representanteLegal.getPrimerApeliido(),
+                representanteLegal.getSegundoApeliido(),
+                representanteLegal.getNumeroIdentificacion());
+    }*/
+
 }
