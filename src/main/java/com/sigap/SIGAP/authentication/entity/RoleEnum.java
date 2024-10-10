@@ -2,7 +2,7 @@ package com.sigap.SIGAP.authentication.entity;
 
 public enum RoleEnum {
 
-    ADMMIN,
+    ADMIN,
     USER,
     INVITED,
     DEVELOPER

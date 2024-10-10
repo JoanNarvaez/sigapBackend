@@ -3,13 +3,13 @@ package com.sigap.SIGAP.authentication.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-
+@Setter
+@Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
-@Data
-@Table(name ="permissions")
+@Table(name = "permissions")
 public class PermissionEntity {
 
     @Id

@@ -1,6 +1,8 @@
 package com.sigap.SIGAP.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+
+import com.sigap.SIGAP.authentication.service.UserDetailServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,6 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -30,77 +33,56 @@ import java.util.List;
 public class SecurityConfig {
 
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+                .csrf(csrf -> csrf.disable())
+                .httpBasic(Customizer.withDefaults())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(http -> {
+                    // Configurar los endpoints publicos
+                    http.requestMatchers(HttpMethod.GET, "/auth/get").permitAll();
+
+                    // Cofnigurar los endpoints privados
+                    http.requestMatchers(HttpMethod.POST, "/auth/post").hasAnyRole("ADMIN", "DEVELOPER");
+                    http.requestMatchers(HttpMethod.PATCH, "/auth/patch").hasAnyAuthority("REFACTOR");
+
+                    // Configurar el resto de endpoint - NO ESPECIFICADOS
+                    http.anyRequest().denyAll();
+                })
+                .build();
+    }
 
 //    @Bean
 //    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-//
-//            return httpSecurity
-//                    .csrf(csrf->csrf.disable())
-//                    .httpBasic(Customizer.withDefaults())
-//                    .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                    .authorizeHttpRequests(http->{
-//                        //Configurar los endpoits PUBLICOS
-//                        http.requestMatchers(HttpMethod.GET,"/auth/hello").permitAll();
-//                        //Configurar los endpoits PRIVADOS
-//                        http.requestMatchers(HttpMethod.GET,"/auth/hello-secured").hasAuthority("CREATE");
-//
-//                        //Configurar el resto de endpoint - NO ESPECIFICADOS
-//                        http.anyRequest().denyAll();
-//                        // DENYALL RECHAZO TODOS LO QUE NO SE ESPECIFICO ES MAS RESTRINGIDO Y MAS SEGURO
-////                        http.anyRequest().authenticated();
-//                        //AUNQUE NO ESPECIFIQUE SI YO TENGO CREDECIALES CORRCTA ME VA DEJAR PASASAR - ES MAS PERMISIVO
-//
-//                    })
-//                    .build();
+//        return httpSecurity
+//                .csrf(csrf -> csrf.disable())
+//                .httpBasic(Customizer.withDefaults())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .build();
 //    }
-
-    //TRABJAR CON ANOTACIONES
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-
-            return httpSecurity
-                    .csrf(csrf->csrf.disable())
-                    .httpBasic(Customizer.withDefaults())
-                    .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .build();
-    }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-    @Bean
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 
+    @Bean
+    public AuthenticationProvider authenticationProvider(UserDetailServiceImpl userDetailService){
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(userDetailService);
         return provider;
     }
-    @Bean
-    public UserDetailsService userDetailsService(){
-
-        List<UserDetails> userDetailsList = new ArrayList<>();
-
-        userDetailsList.add(User.withUsername("joan")
-                .password("1234")
-                .roles("ADMIN")
-                .authorities("READ","CREATE").build());
-
-        userDetailsList.add(User.withUsername("andres")
-                .password("1234")
-                .roles("USER")
-                .authorities("READ").build());
-
-        return new InMemoryUserDetailsManager(userDetailsList);
-
-            }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
-//    para solamnete pruebas NoOpasswordEncoder no es buena practica
+        return new BCryptPasswordEncoder();
     }
+//        public static void main(String[] args){
+//            System.out.println(new BCryptPasswordEncoder().encode("1234"));
+//        }
+       // return NoOpPasswordEncoder.getInstance();
+//    para solamnete pruebas NoOpasswordEncoder no es buena practica
+
 }
